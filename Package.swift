@@ -22,6 +22,7 @@ let package = Package(
         .package(url: "https://github.com/swift-molecules/swift-async-waiter", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-either", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-queue", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-memory", branch: "main"),
     ],
     targets: [
         .target(
@@ -31,6 +32,7 @@ let package = Package(
                 .product(name: "Async Waiter", package: "swift-async-waiter"),
                 .product(name: "Either", package: "swift-either"),
                 .product(name: "Queue", package: "swift-queue"),
+                .product(name: "Memory", package: "swift-memory"),
             ]
         ),
         .testTarget(

@@ -3,7 +3,7 @@ public import Async
 internal import Async_Waiter
 internal import Buffer_Ring_Primitive
 internal import Memory_Allocator_Primitive
-internal import Memory_Heap
+internal import Memory
 internal import Queue
 internal import Storage
 
