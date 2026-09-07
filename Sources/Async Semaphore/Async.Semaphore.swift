@@ -1,4 +1,3 @@
-internal import Async
 public import Async
 
 extension Async {

@@ -1,4 +1,3 @@
-internal import Async
 public import Async
 internal import Async_Waiter
 internal import Buffer_Ring_Primitive
