@@ -1,7 +1,8 @@
 #if !hasFeature(Embedded)
-    public import Async
-    internal import Async
+    public import Async_Primitive
+    internal import Async_Mutex
     internal import Async_Waiter
+    internal import Queue_Primitive
     internal import Queue
 
     extension Async.Semaphore {

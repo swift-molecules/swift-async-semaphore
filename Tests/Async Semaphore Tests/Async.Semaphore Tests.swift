@@ -1,12 +1,13 @@
+import Async_Semaphore
 import Async
 import Synchronization
 import Testing
 
 extension Async.Semaphore {
     enum Test {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+        @Suite struct `Semaphore operations preserve their basic behavior` {}
+        @Suite struct `Semaphore operations preserve boundary behavior` {}
+        @Suite struct `Semaphore operations compose with their dependencies` {}
     }
 }
 
@@ -50,9 +51,9 @@ private final class Collector<T: Sendable>: Sendable {
     var count: Int { _values.withLock { $0.count } }
 }
 
-extension Async.Semaphore.Test.Unit {
+extension Async.Semaphore.Test.`Semaphore operations preserve their basic behavior` {
     @Test
-    func `init creates semaphore with correct capacity`() {
+    func `Init creates semaphore with correct capacity`() {
         let semaphore = Async.Semaphore(capacity: 3)
         let metrics = semaphore.metrics
         #expect(metrics.currentOutstanding == 0)
@@ -61,7 +62,7 @@ extension Async.Semaphore.Test.Unit {
     }
 
     @Test
-    func `wait acquires permit immediately when available`() async throws {
+    func `Wait acquires permit immediately when available`() async throws {
         let semaphore = Async.Semaphore(capacity: 2)
         try await semaphore.wait()
         let metrics = semaphore.metrics
@@ -70,7 +71,7 @@ extension Async.Semaphore.Test.Unit {
     }
 
     @Test
-    func `signal releases permit`() async throws {
+    func `Signalling the semaphore releases a permit`() async throws {
         let semaphore = Async.Semaphore(capacity: 1)
         try await semaphore.wait()
         semaphore.signal()
@@ -81,7 +82,7 @@ extension Async.Semaphore.Test.Unit {
     }
 
     @Test
-    func `multiple acquires up to capacity succeed immediately`() async throws {
+    func `Multiple acquires up to capacity succeed immediately`() async throws {
         let semaphore = Async.Semaphore(capacity: 3)
         try await semaphore.wait()
         try await semaphore.wait()
@@ -92,7 +93,7 @@ extension Async.Semaphore.Test.Unit {
     }
 
     @Test
-    func `signal resumes suspended waiter`() async throws {
+    func `Signal resumes suspended waiter`() async throws {
         let semaphore = Async.Semaphore(capacity: 1)
         try await semaphore.wait()
 
@@ -112,7 +113,7 @@ extension Async.Semaphore.Test.Unit {
     }
 
     @Test
-    func `withPermit acquires and releases`() async throws {
+    func `WithPermit acquires and releases`() async throws {
         let semaphore = Async.Semaphore(capacity: 1)
 
         try await semaphore.withPermit {
@@ -125,7 +126,7 @@ extension Async.Semaphore.Test.Unit {
     }
 
     @Test
-    func `metrics track peak outstanding`() async throws {
+    func `Metrics track peak outstanding`() async throws {
         let semaphore = Async.Semaphore(capacity: 5)
 
         try await semaphore.wait()
@@ -142,9 +143,9 @@ extension Async.Semaphore.Test.Unit {
     }
 }
 
-extension Async.Semaphore.Test.`Edge Case` {
+extension Async.Semaphore.Test.`Semaphore operations preserve boundary behavior` {
     @Test
-    func `shutdown wakes all waiters`() async throws {
+    func `Shutdown wakes all waiters`() async throws {
         let semaphore = Async.Semaphore(capacity: 1)
         try await semaphore.wait()
 
@@ -170,7 +171,7 @@ extension Async.Semaphore.Test.`Edge Case` {
     }
 
     @Test
-    func `wait after shutdown throws immediately`() async {
+    func `Wait after shutdown throws immediately`() async {
         let semaphore = Async.Semaphore(capacity: 1)
         semaphore.shutdown()
 
@@ -183,7 +184,7 @@ extension Async.Semaphore.Test.`Edge Case` {
     }
 
     @Test
-    func `shutdown is idempotent`() {
+    func `Repeated semaphore shutdown preserves its closed state`() {
         let semaphore = Async.Semaphore(capacity: 1)
         semaphore.shutdown()
         semaphore.shutdown()
@@ -191,7 +192,7 @@ extension Async.Semaphore.Test.`Edge Case` {
     }
 
     @Test
-    func `cancellation wakes waiter with error`() async throws {
+    func `Cancellation wakes waiter with error`() async throws {
         let semaphore = Async.Semaphore(capacity: 1)
         try await semaphore.wait()
 
@@ -212,7 +213,7 @@ extension Async.Semaphore.Test.`Edge Case` {
     }
 
     @Test
-    func `timeout fires correctly`() async throws {
+    func `Semaphore waiting reports a timeout`() async throws {
         let semaphore = Async.Semaphore(capacity: 1)
         try await semaphore.wait()
 
@@ -227,7 +228,7 @@ extension Async.Semaphore.Test.`Edge Case` {
     }
 
     @Test
-    func `wait from an already-cancelled task resolves promptly instead of hanging forever`()
+    func `Wait from an already-cancelled task resolves promptly instead of hanging forever`()
         async throws
     {
         for _ in 0..<30 {
@@ -270,7 +271,7 @@ extension Async.Semaphore.Test.`Edge Case` {
     }
 
     @Test
-    func `cancelling between handler installation and suspension does not orphan the waiter`()
+    func `Cancelling between handler installation and suspension does not orphan the waiter`()
         async throws
     {
         for _ in 0..<30 {
@@ -308,7 +309,7 @@ extension Async.Semaphore.Test.`Edge Case` {
     }
 }
 
-extension Async.Semaphore.Test.Integration {
+extension Async.Semaphore.Test.`Semaphore operations compose with their dependencies` {
     @Test
     func `FIFO ordering under contention`() async throws {
         let semaphore = Async.Semaphore(capacity: 1)
@@ -339,7 +340,7 @@ extension Async.Semaphore.Test.Integration {
     }
 
     @Test
-    func `concurrent stress test enforces capacity limit`() async throws {
+    func `Concurrent stress test enforces capacity limit`() async throws {
         let capacity = 3
         let taskCount = 10
         let semaphore = Async.Semaphore(capacity: capacity)
@@ -371,7 +372,7 @@ extension Async.Semaphore.Test.Integration {
     }
 
     @Test
-    func `withPermit holds permit for body duration`() async throws {
+    func `WithPermit holds permit for body duration`() async throws {
         let semaphore = Async.Semaphore(capacity: 1)
 
         let task = Task {
@@ -390,7 +391,7 @@ extension Async.Semaphore.Test.Integration {
     }
 
     @Test
-    func `metrics accuracy after mixed operations`() async throws {
+    func `Metrics accuracy after mixed operations`() async throws {
         let semaphore = Async.Semaphore(capacity: 2)
 
         try await semaphore.wait()

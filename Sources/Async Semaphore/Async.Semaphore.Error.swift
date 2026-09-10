@@ -1,4 +1,5 @@
-public import Async
+public import Async_Lifecycle
+public import Async_Primitive
 
 extension Async.Semaphore {
 

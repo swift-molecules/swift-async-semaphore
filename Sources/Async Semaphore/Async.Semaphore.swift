@@ -1,4 +1,6 @@
-public import Async
+internal import Async_Mutex
+public import Async_Primitive
+public import Async_Promise
 
 extension Async {
 
