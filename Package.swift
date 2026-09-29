@@ -22,7 +22,7 @@ let package = Package(
         .package(url: "https://github.com/swift-atoms/swift-memory.git", branch: "main"),
         .package(url: "https://github.com/swift-molecules/swift-memory-allocation.git", branch: "main"),
         .package(url: "https://github.com/swift-atoms/swift-queue.git", branch: "main"),
-        .package(url: "https://github.com/swift-molecules/swift-storage-memory.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-storage.git", branch: "main", traits: ["Generational", "Memory"]),
     ],
     targets: [
         .target(
@@ -41,7 +41,7 @@ let package = Package(
                 .product(name: "Memory Allocator", package: "swift-memory-allocation"),
                 .product(name: "Queue", package: "swift-queue"),
                 .product(name: "Queue Primitive", package: "swift-queue"),
-                .product(name: "Storage Memory", package: "swift-storage-memory"),
+                .product(name: "Storage", package: "swift-storage"),
             ],
             path: "Sources/Async Semaphore"
         ),

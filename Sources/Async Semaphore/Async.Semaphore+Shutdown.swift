@@ -7,7 +7,7 @@ internal import Memory_Allocator
 internal import Memory
 internal import Queue_Primitive
 internal import Queue
-internal import Storage_Memory
+internal import Storage
 
 extension Async.Semaphore {
 
