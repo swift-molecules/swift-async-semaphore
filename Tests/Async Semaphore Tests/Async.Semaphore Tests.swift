@@ -103,7 +103,7 @@ extension Async.Semaphore.Test.`Semaphore operations preserve their basic behavi
             resumed.increment()
         }
 
-        try? await Task.sleep(for: .milliseconds(50))
+        for _ in 0..<1_000_000 where semaphore.metrics.currentWaiters < 1 { await Task.yield() }
 
         semaphore.signal()
         try await task.value
@@ -162,7 +162,7 @@ extension Async.Semaphore.Test.`Semaphore operations preserve boundary behavior`
                 }
             }
 
-            try? await Task.sleep(for: .milliseconds(50))
+            for _ in 0..<1_000_000 where semaphore.metrics.currentWaiters < 3 { await Task.yield() }
 
             semaphore.shutdown()
         }
@@ -200,7 +200,7 @@ extension Async.Semaphore.Test.`Semaphore operations preserve boundary behavior`
             try await semaphore.wait()
         }
 
-        try? await Task.sleep(for: .milliseconds(50))
+        for _ in 0..<1_000_000 where semaphore.metrics.currentWaiters < 1 { await Task.yield() }
 
         task.cancel()
 
@@ -330,7 +330,7 @@ extension Async.Semaphore.Test.`Semaphore operations compose with their dependen
                     }
                 }
 
-                try? await Task.sleep(for: .milliseconds(20))
+                for _ in 0..<1_000_000 where semaphore.metrics.currentWaiters < i + 1 { await Task.yield() }
             }
 
             semaphore.signal()
