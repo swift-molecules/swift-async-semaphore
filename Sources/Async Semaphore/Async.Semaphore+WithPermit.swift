@@ -5,7 +5,7 @@
     extension Async.Semaphore {
 
         nonisolated(nonsending)
-            public func withPermit<T: Sendable, E: Swift.Error>(
+            public func withPermit<T: Sendable, E: Swift::Error>(
                 _ body: sending @escaping () async throws(E) -> sending T
             ) async throws(Either<Async.Semaphore.Error, E>) -> sending T
         {

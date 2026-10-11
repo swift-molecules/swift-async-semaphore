@@ -19,7 +19,9 @@ private final class Counter: Sendable {
         self._value = Mutex(initial)
         self._peak = Mutex(initial)
     }
+}
 
+extension Counter {
     var value: Int { _value.withLock { $0 } }
     var peak: Int { _peak.withLock { $0 } }
 
@@ -42,7 +44,9 @@ private final class Collector<T: Sendable>: Sendable {
     private let _values: Mutex<[T]>
 
     init() { self._values = Mutex([]) }
+}
 
+extension Collector {
     func append(_ value: T) {
         _values.withLock { $0.append(value) }
     }
