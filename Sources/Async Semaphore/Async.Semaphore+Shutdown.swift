@@ -3,10 +3,10 @@ public import Async_Primitive
 internal import Async_Promise
 internal import Async_Waiter
 internal import Buffer_Ring_Primitive
-internal import Memory_Allocator
 internal import Memory
-internal import Queue_Primitive
+internal import Memory_Allocator
 internal import Queue
+internal import Queue_Primitive
 internal import Storage
 
 extension Async.Semaphore {

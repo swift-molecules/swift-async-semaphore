@@ -1,5 +1,5 @@
-import Async_Semaphore
 import Async
+import Async_Semaphore
 import Synchronization
 import Testing
 

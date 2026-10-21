@@ -2,10 +2,10 @@ internal import Async_Mutex
 public import Async_Primitive
 public import Async_Waiter
 internal import Buffer_Ring_Primitive
-internal import Memory_Allocator
 internal import Memory
-public import Queue_Primitive
+internal import Memory_Allocator
 internal import Queue
+public import Queue_Primitive
 internal import Storage
 
 extension Async.Semaphore {

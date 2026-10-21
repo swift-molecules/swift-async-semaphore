@@ -2,8 +2,8 @@ public import Async_Lifecycle
 public import Async_Primitive
 public import Async_Waiter
 internal import Buffer_Ring_Primitive
-internal import Memory_Allocator
 internal import Memory
+internal import Memory_Allocator
 public import Queue_Primitive
 internal import Storage
 
