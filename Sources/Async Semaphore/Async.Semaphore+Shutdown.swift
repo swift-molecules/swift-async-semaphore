@@ -5,6 +5,7 @@ internal import Async_Waiter
 internal import Buffer_Ring_Primitive
 internal import Memory
 internal import Memory_Allocator
+internal import Memory_Allocator_Protocol
 internal import Queue
 internal import Queue_Primitive
 internal import Storage

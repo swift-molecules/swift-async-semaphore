@@ -39,6 +39,7 @@ let package = Package(
                 .product(name: "Either", package: "swift-either"),
                 .product(name: "Memory", package: "swift-memory"),
                 .product(name: "Memory Allocator", package: "swift-memory-allocation"),
+                .product(name: "Memory Allocator Protocol", package: "swift-memory-allocation"),
                 .product(name: "Queue", package: "swift-queue"),
                 .product(name: "Queue Primitive", package: "swift-queue"),
                 .product(name: "Storage", package: "swift-storage"),
