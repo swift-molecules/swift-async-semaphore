@@ -4,6 +4,7 @@ Use this package to bound how many tasks run a section of async work at once: a 
 
 ## Laws
 
+- `Async.Semaphore(capacity:)` traps when `capacity` is below 1.
 - Suspended waiters are served first in, first out. A `signal()` while waiters are queued hands its permit straight to the oldest eligible waiter instead of returning it to the pool, so a later `wait()` cannot take it first.
 - A waiter that has been cancelled or has timed out is never handed a permit; `signal()` skips it and gives the permit to the next waiter.
 - When a permit is free, `wait()` and `wait(timeout:)` take it without suspending. Cancellation and the timeout only apply while suspended: an already-cancelled task still acquires a free permit, and a timeout never fires on the fast path.
