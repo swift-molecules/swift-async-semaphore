@@ -12,7 +12,7 @@ internal import Storage
 extension Async.Semaphore {
 
     @usableFromInline
-    enum SignalEffect: ~Copyable, Sendable {
+    fileprivate enum SignalEffect: ~Copyable, Sendable {
 
         case none
 
