@@ -1,3 +1,4 @@
+public import Async_Lifecycle
 internal import Async_Mutex
 public import Async_Primitive
 public import Async_Promise
@@ -9,7 +10,6 @@ internal import Memory_Allocator_Protocol
 internal import Queue
 internal import Queue_Primitive
 internal import Storage
-public import Async_Lifecycle
 
 extension Async {
 
